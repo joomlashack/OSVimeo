@@ -1,0 +1,22 @@
+{
+    "name"             : "Alledia/OSVimeo",
+    "description"      : "Embed Vimeo videos into articles",
+    "minimum-stability": "stable",
+    "license"          : "GPL-2+",
+    "type"             : "joomla.plugin",
+    "extra"            : {
+        "element": "plg_content_vimeoembed",
+        "name":    "OSVimeo",
+        "folder":  "content",
+        "client":  "site"
+    },
+    "authors"          : [
+        {
+            "name" : "Open Source Training",
+            "email": "info@ostraining.com"
+        }
+    ],
+    "require"          : {
+        "php"       : ">= 5.3"
+    }
+}

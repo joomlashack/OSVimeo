@@ -46,4 +46,8 @@
             </fieldset>
         </fields>
     </config>
+
+    <updateservers>
+        <server type="extension" priority="1" name="OSVimeo Updates"><![CDATA[http://deploy.ostraining.com/updates/joomla/plg_content_vimeoembed.xml]]></server>
+    </updateservers>
 </extension>
