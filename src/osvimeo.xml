@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="2.5" type="plugin" group="content">
-    <name>PLG_CONTENT_VIMEOEMBED</name>
+    <name>PLG_CONTENT_OSVIMEO</name>
     <author>OSTraining</author>
-    <creationDate>February 2014</creationDate>
+    <creationDate>September 22 2014</creationDate>
     <copyright>Copyright (C) 2014 OSTraining.com</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
     <authorEmail>info@ostraining.com</authorEmail>
@@ -12,8 +12,9 @@
 
     <files>
         <folder>language</folder>
-        <filename plugin="vimeoembed">vimeoembed.php</filename>
-        <filename plugin="vimeoembed">style.css</filename>
+        <filename plugin="osvimeo">osvimeo.php</filename>
+        <filename>include.php</filename>
+        <filename>style.css</filename>
     </files>
 
     <config>
@@ -23,23 +24,23 @@
                         name="width"
                         type="text"
                         default="425"
-                        label="PLG_CONTENT_VIMEOEMBED_FIELD_WIDTH_LABEL"
-                        description="PLG_CONTENT_VIMEOEMBED_FIELD_WIDTH_DESC"/>
+                        label="PLG_CONTENT_OSVIMEO_FIELD_WIDTH_LABEL"
+                        description="PLG_CONTENT_OSVIMEO_FIELD_WIDTH_DESC"/>
 
                 <field
                         name="height"
                         type="text"
                         default="344"
-                        label="PLG_CONTENT_VIMEOEMBED_FIELD_HEIGHT_LABEL"
-                        description="PLG_CONTENT_VIMEOEMBED_FIELD_HEIGHT_DESC"/>
+                        label="PLG_CONTENT_OSVIMEO_FIELD_HEIGHT_LABEL"
+                        description="PLG_CONTENT_OSVIMEO_FIELD_HEIGHT_DESC"/>
 
                 <field
                         name="responsive"
                         type="radio"
                         class="btn-group btn-group-yesno"
                         default="1"
-                        label="PLG_CONTENT_VIMEOEMBED_FIELD_RESPONSIVE_LABEL"
-                        description="PLG_CONTENT_VIMEOEMBED_FIELD_RESPONSIVE_DESC">
+                        label="PLG_CONTENT_OSVIMEO_FIELD_RESPONSIVE_LABEL"
+                        description="PLG_CONTENT_OSVIMEO_FIELD_RESPONSIVE_DESC">
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>
                 </field>
@@ -48,6 +49,6 @@
     </config>
 
     <updateservers>
-        <server type="extension" priority="1" name="OSVimeo Updates"><![CDATA[http://deploy.ostraining.com/updates/joomla/plg_content_vimeoembed.xml]]></server>
+        <server type="extension" priority="1" name="OSVimeo Updates"><![CDATA[http://deploy.ostraining.com/updates/joomla/plg_content_osvimeo.xml]]></server>
     </updateservers>
 </extension>
