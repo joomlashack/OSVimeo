@@ -8,7 +8,7 @@
     <authorEmail>info@ostraining.com</authorEmail>
     <authorUrl>http://www.ostraining.com</authorUrl>
     <version>1.0.0</version>
-    <description>PLG_CONTENT_VIMEOEMBED_DESCRIPTION</description>
+    <description>PLG_CONTENT_OSVIMEO_DESCRIPTION</description>
 
     <files>
         <folder>language</folder>
