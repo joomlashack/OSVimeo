@@ -73,7 +73,7 @@ class plgContentOSVimeo extends JPlugin
         $attribs = array(
             'width'       => $width,
             'height'      => $height,
-            'src'         => '//player.vimeo.com/video' . $vCode,
+            'src'         => '//player.vimeo.com/video/' . $vCode,
             'frameborder' => '0'
         );
 
