@@ -1,6 +1,6 @@
 <?php
 /**
- * @package   plg_content_vimeoembed
+ * @package   plg_content_osvimeo
  * @contact   www.ostraining.com, support@ostraining.com
  * @copyright 2013 Open Source Training, LLC. All rights reserved
  * @license   http://www.gnu.org/licenses/gpl.html GNU/GPL
@@ -10,18 +10,20 @@ defined('_JEXEC') or die();
 
 jimport('joomla.plugin.plugin');
 
+require_once 'include.php';
+
 /**
- * Vimeo Video Embedder Content Plugin
+ * OSVimeo Content Plugin
  *
  */
-class plgContentVimeoEmbed extends JPlugin
+class plgContentOSVimeo extends JPlugin
 {
     public function __construct(&$subject, $config = array())
     {
         parent::__construct($subject, $config);
 
         $lang = JFactory::getLanguage();
-        $lang->load('plg_content_vimeoembed.sys', __DIR__);
+        $lang->load('plg_content_osvimeo.sys', __DIR__);
     }
 
     /**
@@ -58,15 +60,33 @@ class plgContentVimeoEmbed extends JPlugin
 
         if ($responsive) {
             $doc = JFactory::getDocument();
-            $doc->addStyleSheet(JURI::base() . "plugins/content/vimeoembed/style.css");
+            $doc->addStyleSheet(JURI::base() . "plugins/content/osvimeo/style.css");
             $output .= '<div class="vimeo-responsive">';
         }
 
-        $output .= '<iframe width="' . $width . '" height="' . $height . '" frameborder="0" src="http://player.vimeo.com/video/' . $vCode . '?portrait=0"></iframe>';
+        $query = explode('&', htmlspecialchars_decode($vCode));
+        $vCode = array_shift($query);
+        if ($query) {
+            $vCode .= '?' . http_build_query($query);
+        }
+
+        $attribs = array(
+            'width'       => $width,
+            'height'      => $height,
+            'src'         => '//player.vimeo.com/video/' . $vCode,
+            'frameborder' => '0'
+        );
+
+        if (OSVIMEO_PRO) {
+            $attribs = OSVimeoPro\Embed::setAttributes($params, $attribs);
+        }
+
+        $output .= '<iframe ' . JArrayHelper::toString($attribs) . '></iframe>';
 
         if ($responsive) {
             $output .= '</div>';
         }
+
         return $output;
     }
 }
