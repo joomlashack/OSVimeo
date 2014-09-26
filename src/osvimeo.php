@@ -6,6 +6,8 @@
  * @license   http://www.gnu.org/licenses/gpl.html GNU/GPL
  */
 
+use Alledia\Joomla\Extension\AbstractPlugin;
+
 defined('_JEXEC') or die();
 
 jimport('joomla.plugin.plugin');
@@ -16,14 +18,13 @@ require_once 'include.php';
  * OSVimeo Content Plugin
  *
  */
-class plgContentOSVimeo extends JPlugin
+class PlgContentOSVimeo extends AbstractPlugin
 {
     public function __construct(&$subject, $config = array())
     {
-        parent::__construct($subject, $config);
+        $this->namespace = 'OSVimeo';
 
-        $lang = JFactory::getLanguage();
-        $lang->load('plg_content_osvimeo.sys', __DIR__);
+        parent::__construct($subject, $config);
     }
 
     /**
@@ -77,7 +78,7 @@ class plgContentOSVimeo extends JPlugin
             'frameborder' => '0'
         );
 
-        if (OSVIMEO_PRO) {
+        if ($this->isPro()) {
             $attribs = OSVimeoPro\Embed::setAttributes($params, $attribs);
         }
 
