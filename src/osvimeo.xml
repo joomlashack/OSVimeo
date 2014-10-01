@@ -10,12 +10,25 @@
     <version>1.0.0</version>
     <description>PLG_CONTENT_OSVIMEO_DESCRIPTION</description>
 
+    <scriptfile>script.osyoutube.php</scriptfile>
+
     <files>
         <folder>language</folder>
+        <folder>views</folder>
         <filename plugin="osvimeo">osvimeo.php</filename>
         <filename>include.php</filename>
         <filename>style.css</filename>
     </files>
+
+    <element publish="true">osvimeo</element>
+
+    <relatedExtensions>
+        <extension
+                type="library"
+                element="allediaframework">AllediaFramework</extension>
+    </relatedExtensions>
+
+    <obsoleteItems />
 
     <config>
         <fields name="params">
