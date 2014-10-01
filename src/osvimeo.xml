@@ -10,7 +10,7 @@
     <version>1.0.0</version>
     <description>PLG_CONTENT_OSVIMEO_DESCRIPTION</description>
 
-    <scriptfile>script.osyoutube.php</scriptfile>
+    <scriptfile>script.osvimeo.php</scriptfile>
 
     <files>
         <folder>language</folder>
