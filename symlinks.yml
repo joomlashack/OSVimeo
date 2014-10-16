@@ -1,1 +1,9 @@
+mkdir:
+    - plugins/content/osvimeo
+symlinks:
+    - src/osvimeo.xml: plugins/content/osvimeo/osvimeo.xml
+    - src/osvimeo.php: plugins/content/osvimeo/osvimeo.php
+    - src/include.php: plugins/content/osvimeo/include.php
+    - src/style.css: plugins/content/osvimeo/style.css
+    - src/language: plugins/content/osvimeo/language
 
