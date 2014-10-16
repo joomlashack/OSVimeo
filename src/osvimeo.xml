@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="2.5" type="plugin" group="content">
+<extension version="2.5" type="plugin" group="content" method="upgrade">
     <name>PLG_CONTENT_OSVIMEO</name>
     <author>Alledia</author>
     <creationDate>September 22 2014</creationDate>
@@ -10,25 +10,35 @@
     <version>1.0.0</version>
     <description>PLG_CONTENT_OSVIMEO_DESCRIPTION</description>
 
-    <scriptfile>script.osvimeo.php</scriptfile>
+    <scriptfile>script.installer.php</scriptfile>
+
+    <alledia>
+        <element publish="true">osvimeo</element>
+
+        <namespace>OSVimeo</namespace>
+
+        <relatedExtensions>
+            <extension
+                type="library"
+                element="allediaframework">AllediaFramework</extension>
+
+            <extension
+                type="plugin"
+                group="system"
+                element="oscarootcertificates"
+                publish="true"
+                ordering="first">OSCARootCertificates</extension>
+        </relatedExtensions>
+    </alledia>
 
     <files>
         <folder>language</folder>
+        <folder>library</folder>
         <folder>views</folder>
         <filename plugin="osvimeo">osvimeo.php</filename>
         <filename>include.php</filename>
         <filename>style.css</filename>
     </files>
-
-    <element publish="true">osvimeo</element>
-
-    <relatedExtensions>
-        <extension
-                type="library"
-                element="allediaframework">AllediaFramework</extension>
-    </relatedExtensions>
-
-    <obsoleteItems />
 
     <config>
         <fields name="params">
