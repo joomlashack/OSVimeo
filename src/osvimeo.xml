@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="2.5" type="plugin" group="content">
     <name>PLG_CONTENT_OSVIMEO</name>
-    <author>OSTraining</author>
+    <author>Alledia</author>
     <creationDate>September 22 2014</creationDate>
-    <copyright>Copyright (C) 2014 OSTraining.com</copyright>
+    <copyright>Copyright (C) 2014 Alledia.com</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-    <authorEmail>info@ostraining.com</authorEmail>
-    <authorUrl>http://www.ostraining.com</authorUrl>
+    <authorEmail>hello@alledia.com</authorEmail>
+    <authorUrl>https://www.alledia.com</authorUrl>
     <version>1.0.0</version>
     <description>PLG_CONTENT_OSVIMEO_DESCRIPTION</description>
 
