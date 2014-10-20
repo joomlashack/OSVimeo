@@ -79,7 +79,7 @@ class PlgContentOSVimeo extends AbstractPlugin
         );
 
         if ($this->isPro()) {
-            $attribs = OSVimeoPro\Embed::setAttributes($params, $attribs);
+            $attribs = Alledia\OSVimeo\Pro\Embed::setAttributes($params, $attribs);
         }
 
         $output .= '<iframe ' . JArrayHelper::toString($attribs) . '></iframe>';
