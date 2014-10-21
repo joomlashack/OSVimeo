@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="OSVimeo Builder" default="">
-    <property file="../build.global.properties" />
+    <property environment="env"/>
+    <if>
+        <isset property="env.BUILD_GLOBAL_PROPERTIES" />
+        <then>
+            <property file="${env.BUILD_GLOBAL_PROPERTIES}" />
+        </then>
+        <else>
+            <property file="../build.global.properties" />
+        </else>
+    </if>
 
     <import file="${builder.path}/src/build.xml"/>
 </project>
