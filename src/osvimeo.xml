@@ -10,13 +10,10 @@
     <version>1.1.1</version>
     <description>PLG_CONTENT_OSVIMEO_DESCRIPTION</description>
 
-    <scriptfile>script.installer.php</scriptfile>
-
     <alledia>
         <element publish="true">osvimeo</element>
-
         <namespace>OSVimeo</namespace>
-
+        <license>free</license>
         <relatedExtensions>
             <extension
                 type="library"
@@ -30,6 +27,8 @@
                 ordering="first">OSCARootCertificates</extension>
         </relatedExtensions>
     </alledia>
+
+    <scriptfile>script.installer.php</scriptfile>
 
     <files>
         <folder>language</folder>
