@@ -41,6 +41,8 @@ class PlgContentOSVimeo extends AbstractPlugin
             return true;
         }
 
+        $this->init();
+
         $article->text = preg_replace(
             '|(http://vimeo.com/([a-zA-Z0-9_-]+))|e',
             '$this->vimeoCodeEmbed("\2")',
