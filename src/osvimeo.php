@@ -14,82 +14,84 @@ jimport('joomla.plugin.plugin');
 
 require_once 'include.php';
 
-/**
- * OSVimeo Content Plugin
- *
- */
-class PlgContentOSVimeo extends AbstractPlugin
-{
-    public function __construct(&$subject, $config = array())
-    {
-        $this->namespace = 'OSVimeo';
-
-        parent::__construct($subject, $config);
-    }
-
+if (defined('ALLEDIA_FRAMEWORK_LOADED')) {
     /**
-     * @param string $context
-     * @param object $article
-     * @param object $params
-     * @param int    $page
+     * OSVimeo Content Plugin
      *
-     * @return bool
      */
-    public function onContentPrepare($context, &$article, &$params, $page = 0)
+    class PlgContentOSVimeo extends AbstractPlugin
     {
-        if (JString::strpos($article->text, 'http://vimeo.com/') === false) {
+        public function __construct(&$subject, $config = array())
+        {
+            $this->namespace = 'OSVimeo';
+
+            parent::__construct($subject, $config);
+        }
+
+        /**
+         * @param string $context
+         * @param object $article
+         * @param object $params
+         * @param int    $page
+         *
+         * @return bool
+         */
+        public function onContentPrepare($context, &$article, &$params, $page = 0)
+        {
+            if (JString::strpos($article->text, 'http://vimeo.com/') === false) {
+                return true;
+            }
+
+            $this->init();
+
+            $article->text = preg_replace(
+                '|(http://vimeo.com/([a-zA-Z0-9_-]+))|e',
+                '$this->vimeoCodeEmbed("\2")',
+                $article->text
+            );
+
             return true;
         }
 
-        $this->init();
+        protected function vimeoCodeEmbed($vCode)
+        {
+            $output = '';
+            $params = $this->params;
 
-        $article->text = preg_replace(
-            '|(http://vimeo.com/([a-zA-Z0-9_-]+))|e',
-            '$this->vimeoCodeEmbed("\2")',
-            $article->text
-        );
+            $width      = $params->get('width', 425);
+            $height     = $params->get('height', 344);
+            $responsive = $params->get('responsive', 1);
 
-        return true;
-    }
+            if ($responsive) {
+                $doc = JFactory::getDocument();
+                $doc->addStyleSheet(JURI::base() . "plugins/content/osvimeo/style.css");
+                $output .= '<div class="vimeo-responsive">';
+            }
 
-    protected function vimeoCodeEmbed($vCode)
-    {
-        $output = '';
-        $params = $this->params;
+            $query = explode('&', htmlspecialchars_decode($vCode));
+            $vCode = array_shift($query);
+            if ($query) {
+                $vCode .= '?' . http_build_query($query);
+            }
 
-        $width      = $params->get('width', 425);
-        $height     = $params->get('height', 344);
-        $responsive = $params->get('responsive', 1);
+            $attribs = array(
+                'width'       => $width,
+                'height'      => $height,
+                'src'         => '//player.vimeo.com/video/' . $vCode,
+                'frameborder' => '0'
+            );
 
-        if ($responsive) {
-            $doc = JFactory::getDocument();
-            $doc->addStyleSheet(JURI::base() . "plugins/content/osvimeo/style.css");
-            $output .= '<div class="vimeo-responsive">';
+            if ($this->isPro()) {
+                $attribs = Alledia\OSVimeo\Pro\Embed::setAttributes($params, $attribs);
+            }
+
+            $output .= '<iframe ' . JArrayHelper::toString($attribs) . '></iframe>';
+
+            if ($responsive) {
+                $output .= '</div>';
+            }
+
+            return $output;
         }
-
-        $query = explode('&', htmlspecialchars_decode($vCode));
-        $vCode = array_shift($query);
-        if ($query) {
-            $vCode .= '?' . http_build_query($query);
-        }
-
-        $attribs = array(
-            'width'       => $width,
-            'height'      => $height,
-            'src'         => '//player.vimeo.com/video/' . $vCode,
-            'frameborder' => '0'
-        );
-
-        if ($this->isPro()) {
-            $attribs = Alledia\OSVimeo\Pro\Embed::setAttributes($params, $attribs);
-        }
-
-        $output .= '<iframe ' . JArrayHelper::toString($attribs) . '></iframe>';
-
-        if ($responsive) {
-            $output .= '</div>';
-        }
-
-        return $output;
     }
 }
