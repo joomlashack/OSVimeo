@@ -38,23 +38,35 @@ if (defined('ALLEDIA_FRAMEWORK_LOADED')) {
          */
         public function onContentPrepare($context, &$article, &$params, $page = 0)
         {
-            if (JString::strpos($article->text, 'http://vimeo.com/') === false) {
+            if (JString::strpos($article->text, '://vimeo.com/') === false) {
                 return true;
             }
 
             $this->init();
 
-            $article->text = preg_replace(
-                '|(http://vimeo.com/([a-zA-Z0-9_-]+))|e',
-                '$this->vimeoCodeEmbed("\2")',
-                $article->text
-            );
+            $regex = '#https?://(?:www\.)?vimeo.com/([a-z0-9\-_]+)#i';
+            if (preg_match_all($regex, $article->text, $matches)) {
+                foreach ($matches[0] as $k => $url) {
+                    $videoID = $matches[1][$k];
+
+                    // Ignores some know invalid urls
+                    $invalidIDs = array('channels', 'moogaloop');
+                    if (!in_array($videoID, $invalidIDs)) {
+                        $article->text = str_replace(
+                            $url,
+                            $this->vimeoCodeEmbed($videoID),
+                            $article->text
+                        );
+                    }
+                }
+            }
 
             return true;
         }
 
         protected function vimeoCodeEmbed($vCode)
         {
+            var_dump($vCode);
             $output = '';
             $params = $this->params;
 
