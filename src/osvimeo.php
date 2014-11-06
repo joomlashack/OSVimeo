@@ -66,7 +66,6 @@ if (defined('ALLEDIA_FRAMEWORK_LOADED')) {
 
         protected function vimeoCodeEmbed($vCode)
         {
-            var_dump($vCode);
             $output = '';
             $params = $this->params;
 
