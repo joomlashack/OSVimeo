@@ -96,7 +96,7 @@ if (defined('ALLEDIA_FRAMEWORK_LOADED')) {
                 $attribs = Alledia\OSVimeo\Pro\Embed::setAttributes($params, $attribs);
             }
 
-            $output .= '<iframe ' . JArrayHelper::toString($attribs) . '></iframe>';
+            $output .= '<iframe name="vimeo_' . $vCode . '" ' . JArrayHelper::toString($attribs) . '></iframe>';
 
             if ($responsive) {
                 $output .= '</div>';
