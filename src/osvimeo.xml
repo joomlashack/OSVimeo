@@ -2,12 +2,12 @@
 <extension version="2.5" type="plugin" group="content" method="upgrade">
     <name>PLG_CONTENT_OSVIMEO</name>
     <author>Alledia</author>
-    <creationDate>November 6 2014</creationDate>
-    <copyright>Copyright (C) 2014 Alledia.com</copyright>
+    <creationDate>May 01, 2015</creationDate>
+    <copyright>Copyright (C) 2015 Open Source Training, LLC</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
-    <authorEmail>hello@alledia.com</authorEmail>
+    <authorEmail>support@alledia.com</authorEmail>
     <authorUrl>https://www.alledia.com</authorUrl>
-    <version>1.1.7</version>
+    <version>1.1.8</version>
     <description>PLG_CONTENT_OSVIMEO_DESCRIPTION</description>
 
     <alledia>
