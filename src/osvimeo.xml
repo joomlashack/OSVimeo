@@ -26,6 +26,8 @@
                 publish="true"
                 ordering="first">OSSystem</extension>
         </relatedExtensions>
+
+        <include>AllediaFreeDefaultFiles</include>
     </alledia>
 
     <scriptfile>script.installer.php</scriptfile>
@@ -34,6 +36,7 @@
         <folder>language</folder>
         <folder>library</folder>
         <folder>views</folder>
+        <folder>form</folder>
         <filename plugin="osvimeo">osvimeo.php</filename>
         <filename>include.php</filename>
         <filename>style.css</filename>
@@ -43,11 +46,14 @@
         <folder>css</folder>
         <folder>js</folder>
         <folder>images</folder>
+        <folder>fonts</folder>
     </media>
 
     <config>
         <fields name="params">
-            <fieldset name="basic">
+            <fieldset name="basic"
+                addfieldpath="/plugins/content/osvimeo/form/fields/">
+
                 <field
                         name="width"
                         type="text"
@@ -72,6 +78,13 @@
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>
                 </field>
+
+                <field
+                    type="customfooter"
+                    name="customfooter"
+                    media="plg_content_osvimeo"
+                    showgoproad="1"
+                    jedurl="http://extensions.joomla.org/extension/osvimeo" />
             </fieldset>
         </fields>
     </config>
