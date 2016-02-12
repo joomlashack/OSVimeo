@@ -86,10 +86,13 @@ if (defined('ALLEDIA_FRAMEWORK_LOADED')) {
             }
 
             $attribs = array(
-                'width'       => $width,
-                'height'      => $height,
-                'src'         => '//player.vimeo.com/video/' . $vCode,
-                'frameborder' => '0'
+                'width'                 => $width,
+                'height'                => $height,
+                'src'                   => '//player.vimeo.com/video/' . $vCode,
+                'frameborder'           => '0',
+                'webkitallowfullscreen' => 'webkitallowfullscreen',
+                'mozallowfullscreen'    => 'mozallowfullscreen',
+                'allowfullscreen'       => 'allowfullscreen',
             );
 
             if ($this->isPro()) {
