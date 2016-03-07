@@ -44,7 +44,12 @@ if (defined('ALLEDIA_FRAMEWORK_LOADED')) {
 
             $this->init();
 
-            $regex = '#https?://(?:www\.)?vimeo.com/([0-9]+)#i';
+            if ($this->isPro()) {
+                $regex = Alledia\OSVimeo\Pro\Embed::getRegex();
+            } else {
+                $regex = '#https?://(?:www\.)?vimeo.com/([0-9]+)#i';
+            }
+
             if (preg_match_all($regex, $article->text, $matches)) {
                 foreach ($matches[0] as $k => $url) {
                     $videoID = $matches[1][$k];
