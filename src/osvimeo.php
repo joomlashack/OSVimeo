@@ -12,9 +12,9 @@ defined('_JEXEC') or die();
 
 jimport('joomla.plugin.plugin');
 
-require_once 'include.php';
+include_once 'include.php';
 
-if (defined('ALLEDIA_FRAMEWORK_LOADED')) {
+if (defined('OSVIMEO_LOADED')) {
     /**
      * OSVimeo Content Plugin
      *

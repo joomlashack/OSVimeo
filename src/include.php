@@ -7,6 +7,7 @@
  */
 
 use Alledia\Factory;
+use Alledia\Framework;
 
 defined('_JEXEC') or die();
 
@@ -19,7 +20,22 @@ if (!defined('ALLEDIA_FRAMEWORK_LOADED')) {
     if (file_exists($allediaFrameworkPath)) {
         require_once $allediaFrameworkPath;
     } else {
-        JFactory::getApplication()
-            ->enqueueMessage('[OSVimeo] Alledia framework not found', 'error');
+        if ($app = JFactory::getApplication()) {
+            if ($app->isAdmin()) {
+                $app->enqueueMessage('[OSVimeo] Alledia framework not found', 'error');
+            }
+        }
+    }
+}
+
+if (defined('ALLEDIA_FRAMEWORK_LOADED')) {
+    if (file_exists(OSVIMEO_PLUGIN_PATH . '/library')
+        && !class_exists('Alledia\OSVimeo\Pro\Embed')) {
+
+        Framework\AutoLoader::register('Alledia\\OSVimeo', OSVIMEO_PLUGIN_PATH . '/library');
+    }
+
+    if (!defined('OSVIMEO_LOADED')) {
+        define('OSVIMEO_LOADED', 1);
     }
 }
