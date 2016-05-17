@@ -8,30 +8,8 @@
     <authorEmail>support@alledia.com</authorEmail>
     <authorUrl>https://www.alledia.com</authorUrl>
     <version>1.1.11</version>
-    <description>PLG_CONTENT_OSVIMEO_DESCRIPTION</description>
-
     <variant>FREE</variant>
-
-    <alledia>
-        <element publish="true">osvimeo</element>
-        <namespace>OSVimeo</namespace>
-        <license>free</license>
-        <targetplatform>3.*</targetplatform>
-        <relatedExtensions>
-            <extension
-                type="library"
-                element="allediaframework">AllediaFramework</extension>
-
-            <extension
-                type="plugin"
-                group="system"
-                element="ossystem"
-                publish="true"
-                ordering="first">OSSystem</extension>
-        </relatedExtensions>
-
-        <include>AllediaFreeDefaultFiles</include>
-    </alledia>
+    <description>PLG_CONTENT_OSVIMEO_DESCRIPTION</description>
 
     <scriptfile>script.installer.php</scriptfile>
 
@@ -95,4 +73,25 @@
     <updateservers>
         <server type="extension" priority="1" name="OSVimeo"><![CDATA[https://deploy.ostraining.com/client/update/free/stable/plg_content_osvimeo]]></server>
     </updateservers>
+
+    <alledia>
+        <element publish="true">osvimeo</element>
+        <namespace>OSVimeo</namespace>
+        <license>free</license>
+        <targetplatform>3.*</targetplatform>
+        <relatedExtensions>
+            <extension
+                type="library"
+                element="allediaframework">AllediaFramework</extension>
+
+            <extension
+                type="plugin"
+                group="system"
+                element="ossystem"
+                publish="true"
+                ordering="first">OSSystem</extension>
+        </relatedExtensions>
+
+        <include>AllediaFreeDefaultFiles</include>
+    </alledia>
 </extension>
