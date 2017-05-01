@@ -44,11 +44,7 @@ if (defined('OSVIMEO_LOADED')) {
 
             $this->init();
 
-            if ($this->isPro()) {
-                $regex = Alledia\OSVimeo\Pro\Embed::getRegex();
-            } else {
-                $regex = '#https?://(?:www\.)?vimeo.com/([0-9]+)/([a-z0-9\/]+)#i';
-            }
+            $regex = '#https?://(?:www\.)?vimeo.com/((?:[0-9]+)(?:[0-9?&a-z=_\-]*)?)#i';
 
             if (preg_match_all($regex, $article->text, $matches)) {
                 foreach ($matches[0] as $k => $url) {
