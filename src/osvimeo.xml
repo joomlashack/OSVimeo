@@ -60,12 +60,10 @@
                     <option value="0">JNO</option>
                 </field>
 
-                <field
-                    type="customfooter"
-                    name="customfooter"
+                <field type="customfooter" name="customfooter"
                     media="plg_content_osvimeo"
-                    showgoproad="1"
-                    jedurl="http://extensions.joomla.org/extension/osvimeo" />
+                    showgoproad="https://www.joomlashack.com/joomla-extensions/osvimeo/"
+                    jedurl="https://extensions.joomla.org/extension/osvimeo/" />
             </fieldset>
         </fields>
     </config>
