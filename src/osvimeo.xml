@@ -33,37 +33,33 @@
     <config>
         <fields name="params">
             <fieldset name="basic"
-                addfieldpath="/plugins/content/osvimeo/form/fields/">
+                      addfieldpath="/plugins/content/osvimeo/form/fields/">
+                <field name="width"
+                       type="text"
+                       default="425"
+                       label="PLG_CONTENT_OSVIMEO_FIELD_WIDTH_LABEL"
+                       description="PLG_CONTENT_OSVIMEO_FIELD_WIDTH_DESC"/>
 
-                <field
-                        name="width"
-                        type="text"
-                        default="425"
-                        label="PLG_CONTENT_OSVIMEO_FIELD_WIDTH_LABEL"
-                        description="PLG_CONTENT_OSVIMEO_FIELD_WIDTH_DESC"/>
+                <field name="height"
+                       type="text"
+                       default="344"
+                       label="PLG_CONTENT_OSVIMEO_FIELD_HEIGHT_LABEL"
+                       description="PLG_CONTENT_OSVIMEO_FIELD_HEIGHT_DESC"/>
 
-                <field
-                        name="height"
-                        type="text"
-                        default="344"
-                        label="PLG_CONTENT_OSVIMEO_FIELD_HEIGHT_LABEL"
-                        description="PLG_CONTENT_OSVIMEO_FIELD_HEIGHT_DESC"/>
-
-                <field
-                        name="responsive"
-                        type="radio"
-                        class="btn-group btn-group-yesno"
-                        default="1"
-                        label="PLG_CONTENT_OSVIMEO_FIELD_RESPONSIVE_LABEL"
-                        description="PLG_CONTENT_OSVIMEO_FIELD_RESPONSIVE_DESC">
+                <field name="responsive"
+                       type="radio"
+                       class="btn-group btn-group-yesno"
+                       default="1"
+                       label="PLG_CONTENT_OSVIMEO_FIELD_RESPONSIVE_LABEL"
+                       description="PLG_CONTENT_OSVIMEO_FIELD_RESPONSIVE_DESC">
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>
                 </field>
 
                 <field type="customfooter" name="customfooter"
-                    media="plg_content_osvimeo"
-                    showgoproad="https://www.joomlashack.com/joomla-extensions/osvimeo/"
-                    jedurl="https://extensions.joomla.org/extension/osvimeo/" />
+                       media="plg_content_osvimeo"
+                       showgoproad="https://www.joomlashack.com/joomla-extensions/osvimeo/"
+                       jedurl="https://extensions.joomla.org/extension/osvimeo/"/>
             </fieldset>
         </fields>
     </config>
@@ -78,16 +74,14 @@
         <license>free</license>
         <targetplatform>3.*</targetplatform>
         <relatedExtensions>
-            <extension
-                type="library"
-                element="allediaframework">AllediaFramework</extension>
+            <extension type="library"
+                       element="allediaframework">AllediaFramework</extension>
 
-            <extension
-                type="plugin"
-                group="system"
-                element="ossystem"
-                publish="true"
-                ordering="first">OSSystem</extension>
+            <extension type="plugin"
+                       group="system"
+                       element="ossystem"
+                       publish="true"
+                       ordering="first">OSSystem</extension>
         </relatedExtensions>
 
         <include>AllediaFreeDefaultFiles</include>
