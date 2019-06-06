@@ -21,7 +21,6 @@
  * along with OSVimeo.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use Alledia\Factory;
 use Alledia\Framework;
 
 defined('_JEXEC') or die();
@@ -35,8 +34,8 @@ if (!defined('ALLEDIA_FRAMEWORK_LOADED')) {
     if (file_exists($allediaFrameworkPath)) {
         require_once $allediaFrameworkPath;
     } else {
-        if ($app = JFactory::getApplication()) {
-            if ($app->isAdmin()) {
+        if ($app = Framework\Factory::getApplication()) {
+            if ($app->isClient('administrator')) {
                 $app->enqueueMessage('[OSVimeo] Alledia framework not found', 'error');
             }
         }
@@ -45,8 +44,8 @@ if (!defined('ALLEDIA_FRAMEWORK_LOADED')) {
 
 if (defined('ALLEDIA_FRAMEWORK_LOADED')) {
     if (file_exists(OSVIMEO_PLUGIN_PATH . '/library')
-        && !class_exists('Alledia\OSVimeo\Pro\Embed')) {
-
+        && !class_exists('Alledia\OSVimeo\Pro\Embed')
+    ) {
         Framework\AutoLoader::register('Alledia\\OSVimeo', OSVIMEO_PLUGIN_PATH . '/library');
     }
 

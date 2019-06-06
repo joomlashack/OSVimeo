@@ -22,6 +22,8 @@
  */
 
 use Alledia\Framework\Joomla\Extension\AbstractPlugin;
+use Joomla\String\StringHelper;
+use Joomla\Utilities\ArrayHelper;
 
 defined('_JEXEC') or die();
 
@@ -53,7 +55,7 @@ if (defined('OSVIMEO_LOADED')) {
          */
         public function onContentPrepare($context, &$article, &$params, $page = 0)
         {
-            if (JString::strpos($article->text, '://vimeo.com/') === false) {
+            if (StringHelper::strpos($article->text, '://vimeo.com/') === false) {
                 return true;
             }
 
@@ -90,8 +92,7 @@ if (defined('OSVIMEO_LOADED')) {
             $responsive = $params->get('responsive', 1);
 
             if ($responsive) {
-                $doc = JFactory::getDocument();
-                $doc->addStyleSheet(JURI::base() . "plugins/content/osvimeo/style.css");
+                JHtml::_('stylesheet', 'plugins/content/osvimeo/style.css');
                 $output .= '<div class="vimeo-responsive">';
             }
 
@@ -115,7 +116,7 @@ if (defined('OSVIMEO_LOADED')) {
                 $attribs = Alledia\OSVimeo\Pro\Embed::setAttributes($params, $attribs);
             }
 
-            $output .= '<iframe name="vimeo_' . $vCode . '" ' . JArrayHelper::toString($attribs) . '></iframe>';
+            $output .= sprintf('<iframe name="vimeo_%s %s"></iframe>', $vCode, ArrayHelper::toString($attribs));
 
             if ($responsive) {
                 $output .= '</div>';
