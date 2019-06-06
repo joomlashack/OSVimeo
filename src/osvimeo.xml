@@ -2,12 +2,12 @@
 <extension version="3.7" type="plugin" group="content" method="upgrade">
     <name>PLG_CONTENT_OSVIMEO</name>
     <author>Joomlashack</author>
-    <creationDate>February 13 2019</creationDate>
+    <creationDate>June 06 2019</creationDate>
     <copyright>Copyright (C) 2016-2019 Joomlashack.com, all rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
     <authorEmail>help@joomlashack.com</authorEmail>
     <authorUrl>https://www.joomlashack.com</authorUrl>
-    <version>1.3.5</version>
+    <version>1.3.6</version>
     <variant>FREE</variant>
     <description>PLG_CONTENT_OSVIMEO_DESCRIPTION</description>
 
