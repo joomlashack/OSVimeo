@@ -2,7 +2,7 @@
 /**
  * @package   OSVimeo
  * @contact   www.joomlashack.com, help@joomlashack.com
- * @copyright 2016-2019 Joomlashack.com. All rights reserved
+ * @copyright 2016-2020 Joomlashack.com. All rights reserved
  * @license   http://www.gnu.org/licenses/gpl.html GNU/GPL
  *
  * This file is part of OSVimeo.
@@ -116,7 +116,7 @@ if (defined('OSVIMEO_LOADED')) {
                 $attribs = Alledia\OSVimeo\Pro\Embed::setAttributes($params, $attribs);
             }
 
-            $output .= sprintf('<iframe name="vimeo_%s %s"></iframe>', $vCode, ArrayHelper::toString($attribs));
+            $output .= sprintf('<iframe name="vimeo_%s" %s></iframe>', $vCode, ArrayHelper::toString($attribs));
 
             if ($responsive) {
                 $output .= '</div>';
