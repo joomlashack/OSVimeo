@@ -116,7 +116,7 @@ if (defined('OSVIMEO_LOADED')) {
                 $attribs = Alledia\OSVimeo\Pro\Embed::setAttributes($params, $attribs);
             }
 
-            $output .= sprintf('<iframe name="vimeo_%s %s"></iframe>', $vCode, ArrayHelper::toString($attribs));
+            $output .= sprintf('<iframe name="vimeo_%s" %s></iframe>', $vCode, ArrayHelper::toString($attribs));
 
             if ($responsive) {
                 $output .= '</div>';
