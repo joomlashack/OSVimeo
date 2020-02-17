@@ -34,17 +34,6 @@
         <fields name="params">
             <fieldset name="basic"
                       addfieldpath="/plugins/content/osvimeo/form/fields/">
-                <field name="width"
-                       type="text"
-                       default="425"
-                       label="PLG_CONTENT_OSVIMEO_FIELD_WIDTH_LABEL"
-                       description="PLG_CONTENT_OSVIMEO_FIELD_WIDTH_DESC"/>
-
-                <field name="height"
-                       type="text"
-                       default="344"
-                       label="PLG_CONTENT_OSVIMEO_FIELD_HEIGHT_LABEL"
-                       description="PLG_CONTENT_OSVIMEO_FIELD_HEIGHT_DESC"/>
 
                 <field name="responsive"
                        type="radio"
@@ -55,6 +44,20 @@
                     <option value="1">JYES</option>
                     <option value="0">JNO</option>
                 </field>
+
+                <field name="width"
+                       type="text"
+                       default="425"
+                       label="PLG_CONTENT_OSVIMEO_FIELD_WIDTH_LABEL"
+                       description="PLG_CONTENT_OSVIMEO_FIELD_WIDTH_DESC"
+                       showon="responsive:0"/>
+
+                <field name="height"
+                       type="text"
+                       default="344"
+                       label="PLG_CONTENT_OSVIMEO_FIELD_HEIGHT_LABEL"
+                       description="PLG_CONTENT_OSVIMEO_FIELD_HEIGHT_DESC"
+                       showon="responsive:0"/>
 
                 <field type="customfooter" name="customfooter"
                        media="plg_content_osvimeo"
