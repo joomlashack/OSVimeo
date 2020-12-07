@@ -63,12 +63,25 @@ if (defined('OSVIMEO_LOADED')) {
 
             $regex = '#https?://(?:www\.)?vimeo.com/((?:[0-9]+)(?:[0-9?&a-z=_\-]*)?)#i';
 
+            $blackList = [];
+            $ignoreLinks = $this->params->get('ignore_html_links', 0);
+            if ($ignoreLinks) {
+                $linkRegex = '#(?:<a.*href=[\'"])' . addcslashes($regex, '#') . '(?:[\'"].*>.*</a>)#';
+                if (preg_match_all($regex, $article->text, $matches)) {
+                    foreach ($matches[0] as $k => $url) {
+                        $blackList[] = $url;
+                    }
+                }
+            }
+
+
             if (preg_match_all($regex, $article->text, $matches)) {
                 foreach ($matches[0] as $k => $url) {
+                    if (in_array($url,$blackList)) continue;
                     $videoID = $matches[1][$k];
 
                     // Ignores some know invalid urls
-                    $invalidIDs = array('channels', 'moogaloop');
+                    $invalidIDs = ['channels', 'moogaloop'];
                     if (!in_array($videoID, $invalidIDs)) {
                         $article->text = str_replace(
                             $url,
