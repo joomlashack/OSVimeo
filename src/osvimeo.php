@@ -69,9 +69,9 @@ if (defined('OSVIMEO_LOADED')) {
             if (preg_match_all($linkRegex, $article->text, $matches)) {
                 foreach ($matches[0] as $k => $source) {
                     $videoID = $matches[4][$k];
-                    $replaceKey = sprintf('{{vimeo_%s}}', $videoID);
+                    $replaceKey = sprintf('{{%s}}', md5($source));
 
-                    if (!isset($replacements[$videoID])) {
+                    if (!isset($replacements[$replaceKey])) {
                         $replacements[$replaceKey] = $ignoreLinks ? $source : $this->vimeoCodeEmbed($videoID) ;
                     }
 
@@ -87,10 +87,11 @@ if (defined('OSVIMEO_LOADED')) {
             if (preg_match_all($regex, $article->text, $matches)) {
                 foreach ($matches[0] as $k => $url) {
                     $videoID = $matches[1][$k];
+                    $replaceKey = sprintf('{{%s}}', md5($url));
 
                     // Ignores some know invalid urls
                     $invalidIDs = ['channels', 'moogaloop'];
-                    if (!in_array($videoID, $invalidIDs) && !isset($replacements[$videoID])) {
+                    if (!in_array($videoID, $invalidIDs) && !isset($replacements[$replaceKey])) {
                         $article->text = str_replace(
                             $url,
                             $this->vimeoCodeEmbed($videoID),
