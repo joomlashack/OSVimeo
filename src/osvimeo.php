@@ -61,15 +61,36 @@ if (defined('OSVIMEO_LOADED')) {
 
             $this->init();
 
-            $regex = '#https?://(?:www\.)?vimeo.com/((?:[0-9]+)(?:[0-9?&a-z=_\-]*)?)#i';
+            $replacements = [];
+            $ignoreLinks = $this->params->get('ignore_html_links', 0);
+            $regex = '(http|https)?:\/\/(www\.|player\.)?vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|video\/|)(\d+)(?:|\/\?)';
+            $linkRegex = '#(?:<a.*href=[\'"])' . addcslashes($regex, '#') . '(?:[\'"].*>.*<\/a>)#i';
 
+            if (preg_match_all($linkRegex, $article->text, $matches)) {
+                foreach ($matches[0] as $k => $source) {
+                    $videoID = $matches[4][$k];
+                    $replaceKey = sprintf('{{vimeo_%s}}', $videoID);
+
+                    if (!isset($replacements[$videoID])) {
+                        $replacements[$replaceKey] = $ignoreLinks ? $source : $this->vimeoCodeEmbed($videoID) ;
+                    }
+
+                    $article->text = str_replace(
+                        $source,
+                        $replaceKey,
+                        $article->text
+                    );
+                }
+            }
+
+            $regex = '#https?://(?:www\.)?vimeo.com/((?:[0-9]+)(?:[0-9?&a-z=_\-]*)?)#i';
             if (preg_match_all($regex, $article->text, $matches)) {
                 foreach ($matches[0] as $k => $url) {
                     $videoID = $matches[1][$k];
 
                     // Ignores some know invalid urls
-                    $invalidIDs = array('channels', 'moogaloop');
-                    if (!in_array($videoID, $invalidIDs)) {
+                    $invalidIDs = ['channels', 'moogaloop'];
+                    if (!in_array($videoID, $invalidIDs) && !isset($replacements[$videoID])) {
                         $article->text = str_replace(
                             $url,
                             $this->vimeoCodeEmbed($videoID),
@@ -77,6 +98,10 @@ if (defined('OSVIMEO_LOADED')) {
                         );
                     }
                 }
+            }
+
+            if ($replacements) {
+                $article->text = str_replace(array_keys($replacements), $replacements, $article->text);
             }
 
             return true;
