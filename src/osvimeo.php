@@ -53,7 +53,7 @@ if (defined('OSVIMEO_LOADED')) {
          *
          * @return bool
          */
-        public function onContentPrepare($context, &$article, &$params, $page = 0)
+        public function onContentPrepare($context, $article, $params, $page = 0)
         {
             if (StringHelper::strpos($article->text, '://vimeo.com/') === false) {
                 return true;
@@ -127,7 +127,7 @@ if (defined('OSVIMEO_LOADED')) {
                 $vCode .= '?' . http_build_query($query);
             }
 
-            $attribs = array(
+            $attribs = [
                 'width'                 => $width,
                 'height'                => $height,
                 'src'                   => '//player.vimeo.com/video/' . $vCode,
@@ -135,7 +135,7 @@ if (defined('OSVIMEO_LOADED')) {
                 'webkitallowfullscreen' => 'webkitallowfullscreen',
                 'mozallowfullscreen'    => 'mozallowfullscreen',
                 'allowfullscreen'       => 'allowfullscreen',
-            );
+            ];
 
             if ($this->isPro()) {
                 $attribs = Alledia\OSVimeo\Pro\Embed::setAttributes($params, $attribs);
