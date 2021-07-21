@@ -2,8 +2,8 @@
 /**
  * @package   OSVimeo
  * @contact   www.joomlashack.com, help@joomlashack.com
- * @copyright 2016-2020 Joomlashack.com. All rights reserved
- * @license   http://www.gnu.org/licenses/gpl.html GNU/GPL
+ * @copyright 2016-2021 Joomlashack.com. All rights reserved
+ * @license   https://www.gnu.org/licenses/gpl.html GNU/GPL
  *
  * This file is part of OSVimeo.
  *
@@ -18,137 +18,134 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with OSVimeo.  If not, see <http://www.gnu.org/licenses/>.
+ * along with OSVimeo.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 use Alledia\Framework\Joomla\Extension\AbstractPlugin;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\Registry\Registry;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
 
 defined('_JEXEC') or die();
 
-jimport('joomla.plugin.plugin');
+$ready = include_once 'include.php';
+if (!$ready) {
+    return;
+}
 
-include_once 'include.php';
+class PlgContentOsvimeo extends AbstractPlugin
+{
+    public $namespace = 'OSVimeo';
 
-if (defined('OSVIMEO_LOADED')) {
     /**
-     * OSVimeo Content Plugin
+     * @param string   $context
+     * @param object   $article
+     * @param Registry $params
+     * @param int     $page
      *
+     * @return bool
      */
-    class PlgContentOSVimeo extends AbstractPlugin
+    public function onContentPrepare($context, $article, $params, $page = 0)
     {
-        public function __construct(&$subject, $config = array())
-        {
-            $this->namespace = 'OSVimeo';
-
-            parent::__construct($subject, $config);
+        if (StringHelper::strpos($article->text, '://vimeo.com/') === false) {
+            return true;
         }
 
-        /**
-         * @param string $context
-         * @param object $article
-         * @param object $params
-         * @param int    $page
-         *
-         * @return bool
-         */
-        public function onContentPrepare($context, $article, $params, $page = 0)
-        {
-            if (StringHelper::strpos($article->text, '://vimeo.com/') === false) {
-                return true;
+        $this->init();
+
+        $replacements = [];
+        $ignoreLinks  = $this->params->get('ignore_html_links', 0);
+        $regex        = '(http|https)?:\/\/(www\.|player\.)?vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|video\/|)(\d+)(?:|\/\?)';
+        $linkRegex    = '#(?:<a.*href=[\'"])' . addcslashes($regex, '#') . '(?:[\'"].*>.*</a>)#i';
+
+        if (preg_match_all($linkRegex, $article->text, $matches)) {
+            foreach ($matches[0] as $k => $source) {
+                $videoID    = $matches[4][$k];
+                $replaceKey = sprintf('{{%s}}', md5($source));
+
+                if (!isset($replacements[$replaceKey])) {
+                    $replacements[$replaceKey] = $ignoreLinks ? $source : $this->vimeoCodeEmbed($videoID);
+                }
+
+                $article->text = str_replace(
+                    $source,
+                    $replaceKey,
+                    $article->text
+                );
             }
+        }
 
-            $this->init();
+        $regex = '#https?://(?:www\.)?vimeo.com/((?:[0-9]+)(?:[0-9?&a-z=_\-]*)?)#i';
+        if (preg_match_all($regex, $article->text, $matches)) {
+            foreach ($matches[0] as $k => $url) {
+                $videoID    = $matches[1][$k];
+                $replaceKey = sprintf('{{%s}}', md5($url));
 
-            $replacements = [];
-            $ignoreLinks = $this->params->get('ignore_html_links', 0);
-            $regex = '(http|https)?:\/\/(www\.|player\.)?vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|video\/|)(\d+)(?:|\/\?)';
-            $linkRegex = '#(?:<a.*href=[\'"])' . addcslashes($regex, '#') . '(?:[\'"].*>.*<\/a>)#i';
-
-            if (preg_match_all($linkRegex, $article->text, $matches)) {
-                foreach ($matches[0] as $k => $source) {
-                    $videoID = $matches[4][$k];
-                    $replaceKey = sprintf('{{%s}}', md5($source));
-
-                    if (!isset($replacements[$replaceKey])) {
-                        $replacements[$replaceKey] = $ignoreLinks ? $source : $this->vimeoCodeEmbed($videoID) ;
-                    }
-
+                // Ignores some know invalid urls
+                $invalidIDs = ['channels', 'moogaloop'];
+                if (!in_array($videoID, $invalidIDs) && !isset($replacements[$replaceKey])) {
                     $article->text = str_replace(
-                        $source,
-                        $replaceKey,
+                        $url,
+                        $this->vimeoCodeEmbed($videoID),
                         $article->text
                     );
                 }
             }
-
-            $regex = '#https?://(?:www\.)?vimeo.com/((?:[0-9]+)(?:[0-9?&a-z=_\-]*)?)#i';
-            if (preg_match_all($regex, $article->text, $matches)) {
-                foreach ($matches[0] as $k => $url) {
-                    $videoID = $matches[1][$k];
-                    $replaceKey = sprintf('{{%s}}', md5($url));
-
-                    // Ignores some know invalid urls
-                    $invalidIDs = ['channels', 'moogaloop'];
-                    if (!in_array($videoID, $invalidIDs) && !isset($replacements[$replaceKey])) {
-                        $article->text = str_replace(
-                            $url,
-                            $this->vimeoCodeEmbed($videoID),
-                            $article->text
-                        );
-                    }
-                }
-            }
-
-            if ($replacements) {
-                $article->text = str_replace(array_keys($replacements), $replacements, $article->text);
-            }
-
-            return true;
         }
 
-        protected function vimeoCodeEmbed($vCode)
-        {
-            $output = '';
-            $params = $this->params;
-
-            $width      = $params->get('width', 425);
-            $height     = $params->get('height', 344);
-            $responsive = $params->get('responsive', 1);
-
-            if ($responsive) {
-                JHtml::_('stylesheet', 'plugins/content/osvimeo/style.css');
-                $output .= '<div class="vimeo-responsive">';
-            }
-
-            $query = explode('&', htmlspecialchars_decode($vCode));
-            $vCode = array_shift($query);
-            if ($query) {
-                $vCode .= '?' . http_build_query($query);
-            }
-
-            $attribs = [
-                'width'                 => $width,
-                'height'                => $height,
-                'src'                   => '//player.vimeo.com/video/' . $vCode,
-                'frameborder'           => '0',
-                'webkitallowfullscreen' => 'webkitallowfullscreen',
-                'mozallowfullscreen'    => 'mozallowfullscreen',
-                'allowfullscreen'       => 'allowfullscreen',
-            ];
-
-            if ($this->isPro()) {
-                $attribs = Alledia\OSVimeo\Pro\Embed::setAttributes($params, $attribs);
-            }
-
-            $output .= sprintf('<iframe name="vimeo_%s" %s></iframe>', $vCode, ArrayHelper::toString($attribs));
-
-            if ($responsive) {
-                $output .= '</div>';
-            }
-
-            return $output;
+        if ($replacements) {
+            $article->text = str_replace(array_keys($replacements), $replacements, $article->text);
         }
+
+        return true;
+    }
+
+    /**
+     * @param string $videoId
+     *
+     * @return string
+     */
+    protected function vimeoCodeEmbed(string $videoId): string
+    {
+        $output = '';
+        $params = $this->params;
+
+        $width      = $params->get('width', 425);
+        $height     = $params->get('height', 344);
+        $responsive = $params->get('responsive', 1);
+
+        if ($responsive) {
+            HTMLHelper::_('stylesheet', 'plg_content_osvimeo/style.css', ['relative' => true]);
+            $output .= '<div class="vimeo-responsive">';
+        }
+
+        $query   = explode('&', htmlspecialchars_decode($videoId));
+        $videoId = array_shift($query);
+        if ($query) {
+            $videoId .= '?' . http_build_query($query);
+        }
+
+        $attribs = [
+            'width'                 => $width,
+            'height'                => $height,
+            'src'                   => '//player.vimeo.com/video/' . $videoId,
+            'frameborder'           => '0',
+            'webkitallowfullscreen' => 'webkitallowfullscreen',
+            'mozallowfullscreen'    => 'mozallowfullscreen',
+            'allowfullscreen'       => 'allowfullscreen',
+        ];
+
+        if ($this->isPro()) {
+            $attribs = Alledia\OSVimeo\Pro\Embed::setAttributes($params, $attribs);
+        }
+
+        $output .= sprintf('<iframe name="vimeo_%s" %s></iframe>', $videoId, ArrayHelper::toString($attribs));
+
+        if ($responsive) {
+            $output .= '</div>';
+        }
+
+        return $output;
     }
 }

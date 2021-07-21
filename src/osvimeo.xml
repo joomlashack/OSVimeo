@@ -2,14 +2,14 @@
 <extension version="3.7" type="plugin" group="content" method="upgrade">
     <name>PLG_CONTENT_OSVIMEO</name>
     <author>Joomlashack</author>
-    <creationDate>December 14 2020</creationDate>
-    <copyright>Copyright 2016-2020 Joomlashack.com, all rights reserved.</copyright>
-    <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
     <authorEmail>help@joomlashack.com</authorEmail>
-    <authorUrl>https://www.joomlashack.com</authorUrl>
-    <version>1.4.1</version>
-    <variant>FREE</variant>
+    <authorUrl>https://www.joomlashack.com/</authorUrl>
+    <copyright>Copyright 2016-2021 Joomlashack.com</copyright>
+    <license>GNU GPL; see LICENSE file</license>
     <description>PLG_CONTENT_OSVIMEO_DESCRIPTION</description>
+    <version>1.4.2b1</version>
+    <creationDate>July 21 2021</creationDate>
+    <variant>FREE</variant>
 
     <scriptfile>script.installer.php</scriptfile>
 
@@ -18,9 +18,9 @@
         <folder>library</folder>
         <folder>views</folder>
         <folder>form</folder>
+
         <filename plugin="osvimeo">osvimeo.php</filename>
         <filename>include.php</filename>
-        <filename>style.css</filename>
     </files>
 
     <media destination="plg_content_osvimeo" folder="media">
@@ -85,6 +85,8 @@
         <namespace>OSVimeo</namespace>
         <license>free</license>
         <targetplatform>3.*</targetplatform>
+        <phpminimum>7.2.5</phpminimum>
+
         <relatedExtensions>
             <extension type="library"
                        element="allediaframework">AllediaFramework</extension>
@@ -97,5 +99,9 @@
         </relatedExtensions>
 
         <include>AllediaFreeDefaultFiles</include>
+
+        <obsolete>
+            <file>/plugins/content/osvimeo/style.css</file>
+        </obsolete>
     </alledia>
 </extension>

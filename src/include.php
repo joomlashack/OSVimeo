@@ -2,8 +2,8 @@
 /**
  * @package   OSVimeo
  * @contact   www.joomlashack.com, help@joomlashack.com
- * @copyright 2016-2020 Joomlashack.com. All rights reserved
- * @license   http://www.gnu.org/licenses/gpl.html GNU/GPL
+ * @copyright 2016-2021 Joomlashack.com. All rights reserved
+ * @license   https://www.gnu.org/licenses/gpl.html GNU/GPL
  *
  * This file is part of OSVimeo.
  *
@@ -18,38 +18,33 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with OSVimeo.  If not, see <http://www.gnu.org/licenses/>.
+ * along with OSVimeo.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 use Alledia\Framework;
 
 defined('_JEXEC') or die();
 
-define('OSVIMEO_PLUGIN_PATH', __DIR__);
-
-// Alledia Framework
 if (!defined('ALLEDIA_FRAMEWORK_LOADED')) {
     $allediaFrameworkPath = JPATH_SITE . '/libraries/allediaframework/include.php';
 
-    if (file_exists($allediaFrameworkPath)) {
+    if (is_file($allediaFrameworkPath)) {
         require_once $allediaFrameworkPath;
-    } else {
-        if ($app = Framework\Factory::getApplication()) {
-            if ($app->isClient('administrator')) {
-                $app->enqueueMessage('[OSVimeo] Alledia framework not found', 'error');
-            }
-        }
-    }
-}
 
-if (defined('ALLEDIA_FRAMEWORK_LOADED')) {
-    if (file_exists(OSVIMEO_PLUGIN_PATH . '/library')
-        && !class_exists('Alledia\OSVimeo\Pro\Embed')
+    } elseif (
+        ($app = Framework\Factory::getApplication())
+        && $app->isClient('administrator')
     ) {
-        Framework\AutoLoader::register('Alledia\\OSVimeo', OSVIMEO_PLUGIN_PATH . '/library');
-    }
+        $app->enqueueMessage('[OSVimeo] Alledia framework not found', 'error');
 
-    if (!defined('OSVIMEO_LOADED')) {
-        define('OSVIMEO_LOADED', 1);
+        return false;
     }
 }
+
+if (!defined('OSVIMEO_LOADED')) {
+    Framework\AutoLoader::register('Alledia\\OSVimeo', __DIR__ . '/library');
+
+    define('OSVIMEO_LOADED', true);
+}
+
+return defined('OSVIMEO_LOADED');
