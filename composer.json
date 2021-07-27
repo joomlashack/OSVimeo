@@ -2,8 +2,8 @@
     "name"             : "joomlashack/osvimeo",
     "description"      : "OSVimeo",
     "minimum-stability": "stable",
-    "license"          : "GPL-2+",
-    "type"             : "joomla.plugin",
+    "license"          : "GPL-2.0-or-later",
+    "type"             : "joomla-plugin",
     "extra"            : {
         "element"        : "plg_content_osvimeo",
         "element-short"  : "osvimeo",
@@ -11,7 +11,7 @@
         "folder"         : "content",
         "client"         : "site",
         "package-license": "free",
-        "target-platform": "3.*",
+        "target-platform": "3.9",
         "infourl"        : "/changelog/osvimeo/"
     },
     "authors"          : [

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="3.7" type="plugin" group="content" method="upgrade">
+<extension type="plugin" group="content" method="upgrade">
     <name>PLG_CONTENT_OSVIMEO</name>
     <author>Joomlashack</author>
     <authorEmail>help@joomlashack.com</authorEmail>
@@ -25,9 +25,7 @@
 
     <media destination="plg_content_osvimeo" folder="media">
         <folder>css</folder>
-        <folder>js</folder>
         <folder>images</folder>
-        <folder>fonts</folder>
     </media>
 
     <config>
@@ -84,7 +82,7 @@
         <element publish="true">osvimeo</element>
         <namespace>OSVimeo</namespace>
         <license>free</license>
-        <targetplatform>3.*</targetplatform>
+        <targetplatform>3.9</targetplatform>
         <phpminimum>7.2.5</phpminimum>
 
         <relatedExtensions>

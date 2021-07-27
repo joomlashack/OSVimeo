@@ -29,8 +29,7 @@ use Joomla\Utilities\ArrayHelper;
 
 defined('_JEXEC') or die();
 
-$ready = include_once 'include.php';
-if (!$ready) {
+if (!include_once 'include.php') {
     return;
 }
 
@@ -42,7 +41,7 @@ class PlgContentOsvimeo extends AbstractPlugin
      * @param string   $context
      * @param object   $article
      * @param Registry $params
-     * @param int     $page
+     * @param int      $page
      *
      * @return bool
      */

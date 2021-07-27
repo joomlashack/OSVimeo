@@ -23,13 +23,13 @@
 
 defined('_JEXEC') or die();
 
-require_once 'library/Installer/include.php';
+require_once __DIR__ . '/library/Installer/include.php';
 
 use Alledia\Installer\AbstractScript;
 
 /**
  * Custom installer script
  */
-class PlgContentOSVimeoInstallerScript extends AbstractScript
+class PlgContentOsvimeoInstallerScript extends AbstractScript
 {
 }

@@ -21,7 +21,8 @@
  * along with OSVimeo.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-use Alledia\Framework;
+use Alledia\Framework\AutoLoader;
+use Joomla\CMS\Factory;
 
 defined('_JEXEC') or die();
 
@@ -32,7 +33,7 @@ if (!defined('ALLEDIA_FRAMEWORK_LOADED')) {
         require_once $allediaFrameworkPath;
 
     } elseif (
-        ($app = Framework\Factory::getApplication())
+        ($app = Factory::getApplication())
         && $app->isClient('administrator')
     ) {
         $app->enqueueMessage('[OSVimeo] Alledia framework not found', 'error');
@@ -42,7 +43,7 @@ if (!defined('ALLEDIA_FRAMEWORK_LOADED')) {
 }
 
 if (!defined('OSVIMEO_LOADED')) {
-    Framework\AutoLoader::register('Alledia\\OSVimeo', __DIR__ . '/library');
+    AutoLoader::register('Alledia\\OSVimeo', __DIR__ . '/library');
 
     define('OSVIMEO_LOADED', true);
 }
