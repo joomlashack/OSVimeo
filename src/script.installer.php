@@ -27,9 +27,6 @@ require_once __DIR__ . '/library/Installer/include.php';
 
 use Alledia\Installer\AbstractScript;
 
-/**
- * Custom installer script
- */
 class PlgContentOsvimeoInstallerScript extends AbstractScript
 {
 }
