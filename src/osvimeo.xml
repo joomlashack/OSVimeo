@@ -75,7 +75,7 @@
     </config>
 
     <updateservers>
-        <server type="extension" priority="1" name="OSVimeo"><![CDATA[https://deploy.ostraining.com/client/update/free/stable/plg_content_osvimeo]]></server>
+        <server type="extension" priority="1" name="OSVimeo Free"><![CDATA[https://deploy.ostraining.com/client/update/free/stable/plg_content_osvimeo]]></server>
     </updateservers>
 
     <alledia>

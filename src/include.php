@@ -27,16 +27,16 @@ use Joomla\CMS\Factory;
 defined('_JEXEC') or die();
 
 if (!defined('ALLEDIA_FRAMEWORK_LOADED')) {
-    $allediaFrameworkPath = JPATH_SITE . '/libraries/allediaframework/include.php';
+    $frameworkPath = JPATH_SITE . '/libraries/allediaframework/include.php';
 
-    if (is_file($allediaFrameworkPath)) {
-        require_once $allediaFrameworkPath;
+    if (is_file($frameworkPath)) {
+        require_once $frameworkPath;
 
     } elseif (
         ($app = Factory::getApplication())
         && $app->isClient('administrator')
     ) {
-        $app->enqueueMessage('[OSVimeo] Alledia framework not found', 'error');
+        $app->enqueueMessage('[OSVimeo] Joomlashack framework not found', 'error');
 
         return false;
     }
