@@ -23,7 +23,6 @@
 
 use Alledia\Framework\Joomla\Extension\AbstractPlugin;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\Registry\Registry;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
 
@@ -35,17 +34,18 @@ if (!include_once 'include.php') {
 
 class PlgContentOsvimeo extends AbstractPlugin
 {
+    /**
+     * @inheritdoc
+     */
     public $namespace = 'OSVimeo';
 
     /**
-     * @param string   $context
-     * @param object   $article
-     * @param Registry $params
-     * @param int      $page
+     * @param string $context
+     * @param object $article
      *
      * @return bool
      */
-    public function onContentPrepare($context, $article, $params, $page = 0)
+    public function onContentPrepare($context, $article): bool
     {
         if (StringHelper::strpos($article->text, '://vimeo.com/') === false) {
             return true;
@@ -60,11 +60,11 @@ class PlgContentOsvimeo extends AbstractPlugin
 
         if (preg_match_all($linkRegex, $article->text, $matches)) {
             foreach ($matches[0] as $k => $source) {
-                $videoID    = $matches[4][$k];
+                $videoId    = $matches[4][$k];
                 $replaceKey = sprintf('{{%s}}', md5($source));
 
                 if (!isset($replacements[$replaceKey])) {
-                    $replacements[$replaceKey] = $ignoreLinks ? $source : $this->vimeoCodeEmbed($videoID);
+                    $replacements[$replaceKey] = $ignoreLinks ? $source : $this->vimeoCodeEmbed($videoId);
                 }
 
                 $article->text = str_replace(
@@ -78,15 +78,15 @@ class PlgContentOsvimeo extends AbstractPlugin
         $regex = '#https?://(?:www\.)?vimeo.com/((?:[0-9]+)(?:[0-9?&a-z=_\-]*)?)#i';
         if (preg_match_all($regex, $article->text, $matches)) {
             foreach ($matches[0] as $k => $url) {
-                $videoID    = $matches[1][$k];
+                $videoId    = $matches[1][$k];
                 $replaceKey = sprintf('{{%s}}', md5($url));
 
                 // Ignores some know invalid urls
-                $invalidIDs = ['channels', 'moogaloop'];
-                if (!in_array($videoID, $invalidIDs) && !isset($replacements[$replaceKey])) {
+                $invalidIds = ['channels', 'moogaloop'];
+                if (!in_array($videoId, $invalidIds) && !isset($replacements[$replaceKey])) {
                     $article->text = str_replace(
                         $url,
-                        $this->vimeoCodeEmbed($videoID),
+                        $this->vimeoCodeEmbed($videoId),
                         $article->text
                     );
                 }
