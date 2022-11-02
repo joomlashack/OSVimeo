@@ -23,14 +23,19 @@
 
 use Alledia\Framework\Joomla\Extension\AbstractPlugin;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Plugin\CMSPlugin;
 use Joomla\String\StringHelper;
 use Joomla\Utilities\ArrayHelper;
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
 
-if (!include_once 'include.php') {
-    return;
+if ((include __DIR__ . '/include.php') == false) {
+    class_alias(CMSPlugin::class, '\\Alledia\\Framework\\Joomla\\Extension\\AbstractPlugin');
 }
+
+// phpcs:enable PSR1.Files.SideEffects
+// phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace
 
 class PlgContentOsvimeo extends AbstractPlugin
 {
@@ -47,7 +52,10 @@ class PlgContentOsvimeo extends AbstractPlugin
      */
     public function onContentPrepare($context, $article): bool
     {
-        if (StringHelper::strpos($article->text, '://vimeo.com/') === false) {
+        if (
+            get_parent_class($this) != AbstractPlugin::class
+            || StringHelper::strpos($article->text, '://vimeo.com/') === false
+        ) {
             return true;
         }
 

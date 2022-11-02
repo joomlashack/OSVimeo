@@ -24,28 +24,32 @@
 use Alledia\Framework\AutoLoader;
 use Joomla\CMS\Factory;
 
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
 
-if (!defined('ALLEDIA_FRAMEWORK_LOADED')) {
+try {
     $frameworkPath = JPATH_SITE . '/libraries/allediaframework/include.php';
+    if (is_file($frameworkPath) == false || (include $frameworkPath) == false) {
+        $app = Factory::getApplication();
 
-    if (is_file($frameworkPath)) {
-        require_once $frameworkPath;
-
-    } elseif (
-        ($app = Factory::getApplication())
-        && $app->isClient('administrator')
-    ) {
-        $app->enqueueMessage('[OSVimeo] Joomlashack framework not found', 'error');
+        if ($app->isClient('administrator')) {
+            $app->enqueueMessage('[OSVimeo] Joomlashack framework not found', 'error');
+        }
 
         return false;
     }
+
+    if (defined('ALLEDIA_FRAMEWORK_LOADED') && !defined('OSVIMEO_LOADED')) {
+        AutoLoader::register('Alledia\\OSVimeo', __DIR__ . '/library');
+
+        define('OSVIMEO_LOADED', true);
+    }
+
+} catch (Throwable $error) {
+    Factory::getApplication()
+        ->enqueueMessage('[OSVimeo] Unable to initialize: ' . $error->getMessage(), 'error');
+
+    return false;
 }
 
-if (!defined('OSVIMEO_LOADED')) {
-    AutoLoader::register('Alledia\\OSVimeo', __DIR__ . '/library');
-
-    define('OSVIMEO_LOADED', true);
-}
-
-return defined('OSVIMEO_LOADED');
+return defined('ALLEDIA_FRAMEWORK_LOADED') && defined('OSVIMEO_LOADED');
