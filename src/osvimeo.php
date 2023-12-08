@@ -31,7 +31,7 @@ use Joomla\Utilities\ArrayHelper;
 defined('_JEXEC') or die();
 
 if ((include __DIR__ . '/include.php') == false) {
-    class_alias(CMSPlugin::class, '\\Alledia\\Framework\\Joomla\\Extension\\AbstractPlugin');
+    class_alias(CMSPlugin::class, AbstractPlugin::class);
 }
 
 // phpcs:enable PSR1.Files.SideEffects
