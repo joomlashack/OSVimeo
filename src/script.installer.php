@@ -2,7 +2,7 @@
 /**
  * @package   OSVimeo
  * @contact   www.joomlashack.com, help@joomlashack.com
- * @copyright 2016-2022 Joomlashack.com. All rights reserved
+ * @copyright 2016-2023 Joomlashack.com. All rights reserved
  * @license   https://www.gnu.org/licenses/gpl.html GNU/GPL
  *
  * This file is part of OSVimeo.
@@ -21,11 +21,15 @@
  * along with OSVimeo.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+use Alledia\Installer\AbstractScript;
+
+// phpcs:disable PSR1.Files.SideEffects
 defined('_JEXEC') or die();
 
 require_once __DIR__ . '/library/Installer/include.php';
 
-use Alledia\Installer\AbstractScript;
+// phpcs:enable PSR1.Files.SideEffects
+// phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace
 
 class PlgContentOsvimeoInstallerScript extends AbstractScript
 {
