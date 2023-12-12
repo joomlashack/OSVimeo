@@ -39,7 +39,7 @@ try {
         return false;
     }
 
-    if (defined('ALLEDIA_FRAMEWORK_LOADED') && !defined('OSVIMEO_LOADED')) {
+    if (defined('ALLEDIA_FRAMEWORK_LOADED') && defined('OSVIMEO_LOADED') == false) {
         AutoLoader::register('Alledia\\OSVimeo', __DIR__ . '/library');
 
         define('OSVIMEO_LOADED', true);

@@ -63,8 +63,8 @@ class PlgContentOsvimeo extends AbstractPlugin
 
         $replacements = [];
         $ignoreLinks  = $this->params->get('ignore_html_links', 0);
-        $regex        = '(http|https)?:\/\/(www\.|player\.)?vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|video\/|)(\d+)(?:|\/\?)';
-        $linkRegex    = '#(?:<a.*href=[\'"])' . addcslashes($regex, '#') . '(?:[\'"].*>.*</a>)#i';
+        $regex        = '(http|https)?://(www\.|player\.)?vimeo\.com/(?:channels/(?:\w+/)?|groups/([^/]*)/videos/|video/|)(\d+)(?:|/\?)';
+        $linkRegex    = '#<a.*href=[\'"]' . addcslashes($regex, '#') . '[\'"].*>.*</a>#i';
 
         if (preg_match_all($linkRegex, $article->text, $matches)) {
             foreach ($matches[0] as $k => $source) {
@@ -83,7 +83,7 @@ class PlgContentOsvimeo extends AbstractPlugin
             }
         }
 
-        $regex = '#https?://(?:www\.)?vimeo.com/((?:[0-9]+)(?:[0-9?&a-z=_\-]*)?)#i';
+        $regex = '#https?://(?:www\.)?vimeo.com/([0-9]+(?:[0-9?&a-z=_\-]*)?)#i';
         if (preg_match_all($regex, $article->text, $matches)) {
             foreach ($matches[0] as $k => $url) {
                 $videoId    = $matches[1][$k];
