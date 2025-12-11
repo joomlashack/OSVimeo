@@ -7,8 +7,8 @@
     <copyright>Copyright 2016-2026 Joomlashack</copyright>
     <license>GNU GPL; see LICENSE file</license>
     <description>PLG_CONTENT_OSVIMEO_DESCRIPTION</description>
-    <version>2.0.4</version>
-    <creationDate>August 29 2024</creationDate>
+    <version>2.1.0b1</version>
+    <creationDate>December 11 2025</creationDate>
     <variant>FREE</variant>
 
     <scriptfile>script.installer.php</scriptfile>
